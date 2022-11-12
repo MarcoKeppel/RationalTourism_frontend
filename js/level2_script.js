@@ -37,6 +37,7 @@
     
     colors = ["blue", "red"]
     for (var i = 0; i < modes.length; i++){
+        console.log(origin_lat + ',' + origin_lng, destination_lat + ',' + destination_lng, colors[i], modes[i])
         requestDirections(origin_lat + ',' + origin_lng, destination_lat + ',' + destination_lng, colors[i], modes[i]);
 
     }
@@ -54,25 +55,22 @@
 
     destination_lat = 0;
     destination_lng = 0;
-    d = '{"result": true, "target": {"lat": 46.504719, "lng": 11.332671}}'
-    const obj = JSON.parse(d);
-    /* Uncomment after connection works!
+
+    // Uncomment after connection works!
     fetch('http://10.199.226.107:8000/getTargetLocation')
-    .then((response) => response.json())
-    .then((data) => {
-        const obj = JSON.parse(data);
+    .then((response) => response.text())
+    .then((response) => {
+        console.log(response);
+        const obj = JSON.parse(response);
         if (obj['result'] == true){
             destination_lat  = obj['target']['lat'];
             destination_lng  = obj['target']['lng'];
         }
+        modes = ["DRIVING", "TRANSIT"]
+        initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng, modes);
         
-    });*/
-    if (obj['result'] == true){
-        destination_lat  = obj['target']['lat'];
-        destination_lng  = obj['target']['lng'];
-    }
-    modes = ["DRIVING", "TRANSIT"]
-    initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng, modes);
+    });
+
 }
 
 
@@ -80,13 +78,13 @@ var current_level = 2;
 function ask_server_for_level(){
     level = 0;
     fetch('http://10.199.226.107:8000/getLevel')
-    .then((response) => response.json())
+    .then((response) => response.text())
     .then((data) => {
         const obj = JSON.parse(data);
         if (obj['result'] == true){
             level  = obj['level'];
             if (level != current_level){
-                window.location = 'index_level3.html'
+                window.location = 'level3_index.html'
             }
         }
         

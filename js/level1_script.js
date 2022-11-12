@@ -51,9 +51,8 @@ function ask_server_for_level(){
         const obj = JSON.parse(data);
         if (obj['result'] == true){
             level  = obj['level'];
-            alert(level)
             if (level != current_level){
-                window.location = 'index_level2.html'
+                window.location = 'level2_index.html'
             }
         }
         
