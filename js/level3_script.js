@@ -38,6 +38,7 @@
     colors = ["blue", "red"]
     for (var i = 0; i < modes.length; i++){
         requestDirections(origin_lat + ',' + origin_lng, destination_lat + ',' + destination_lng, colors[i], modes[i]);
+
     }
   }
   
@@ -53,8 +54,11 @@
 
     destination_lat = 0;
     destination_lng = 0;
+    
+    question = ""
+    answers = []
+    modes = []
 
-    // Uncomment after connection works!
     fetch('http://10.199.226.107:8000/getTargetLocation')
     .then((response) => response.text())
     .then((response) => {
@@ -62,16 +66,22 @@
         if (obj['result'] == true){
             destination_lat  = obj['target']['lat'];
             destination_lng  = obj['target']['lng'];
+            destination_modes  = obj['target']['mode'];
+            question = obj['question'];
+            answers = obj['answers'];
         }
-        modes = ["DRIVING", "TRANSIT"]
-        initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng, modes);
-        
+        answ = document.getElementById('answers');
+        for(var i = 0; i < answers.length; i++){
+            ul = document.createElement('ul');
+            ul.innerText = answers[i]['points']  + ' ' + answers[i]['text'];
+            answ.appendChild(ul);
+        }
+        initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes);
     });
-
 }
 
 
-var current_level = 2;
+var current_level = 3;
 function ask_server_for_level(){
     level = 0;
     fetch('http://10.199.226.107:8000/getLevel')
@@ -81,12 +91,13 @@ function ask_server_for_level(){
         if (obj['result'] == true){
             level  = obj['level'];
             if (level != current_level){
-                window.location = 'level3_index.html'
+                window.location = 'summary.html'
             }
         }
         
     });
 }
+
 function repeat_ask_server_for_level(){
     setInterval(ask_server_for_level, 2000)
 }
