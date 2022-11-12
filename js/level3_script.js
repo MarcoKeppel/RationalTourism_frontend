@@ -38,7 +38,6 @@
     colors = ["blue", "red"]
     for (var i = 0; i < modes.length; i++){
         requestDirections(origin_lat + ',' + origin_lng, destination_lat + ',' + destination_lng, colors[i], modes[i]);
-
     }
   }
   
@@ -58,7 +57,7 @@
     question = ""
     answers = []
     modes = []
-
+    markers = []
     fetch('http://10.199.226.107:8000/phaseThreeInfo')
     .then((response) => response.text())
     .then((response) => {
@@ -70,8 +69,20 @@
             question = obj['question'];
             
         }
-        document.getElementById('question').innerText = question;
-        initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes);
+        fetch('http://10.199.226.107:8000/getPointsOfInterest')
+        .then((response) => response.text())
+        .then((response) => {
+            const obj = JSON.parse(response);
+            if (obj['result'] == true){
+                destination_lat  = obj['target']['lat'];
+                destination_lng  = obj['target']['lng'];
+                destination_modes  = obj['modes'];
+                question = obj['question'];
+                
+            }
+            document.getElementById('question').innerText = question;
+            initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes);
+        });
     });
 }
 
