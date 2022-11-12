@@ -25,32 +25,28 @@ function initPano(latitude, longitude) {
 function getLocation(){
     latitude = 0;
     longitude = 0;
-    d = '{"result": true, "target": {"lat": 46.504719, "lng": 11.332671}}'
-    const obj = JSON.parse(d);
-    /* Uncomment after connection works!
+     //Uncomment after connection works!
     fetch('http://10.199.226.107:8000/getTargetLocation')
-    .then((response) => response.json())
-    .then((data) => {
-        const obj = JSON.parse(data);
+    .then((response) => response.text())
+    .then((response) => {
+        console.log(response);
+        const obj = JSON.parse(response);
         if (obj['result'] == true){
             latitude  = obj['target']['lat'];
             longitude  = obj['target']['lng'];
         }
+        console.log(latitude, longitude);
+        initPano(latitude, longitude);
         
-    });*/
-    if (obj['result'] == true){
-        latitude  = obj['target']['lat'];
-        longitude  = obj['target']['lng'];
-    }
-
-    initPano(latitude, longitude);
+    });
+    
 }
 
 var current_level = 2;
 function ask_server_for_level(){
     level = 0;
     fetch('http://10.199.226.107:8000/getLevel')
-    .then((response) => response.json())
+    .then((response) => response.text())
     .then((data) => {
         const obj = JSON.parse(data);
         if (obj['result'] == true){
