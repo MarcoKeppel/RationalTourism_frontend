@@ -11,6 +11,42 @@
         lat: center_location_lat,
         lng: center_location_lng
       },
+        styles: [
+            {
+                "featureType": "administrative",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            }
+        ]
     });
     function renderDirections(result, color) {
         var directionsRenderer = new google.maps.DirectionsRenderer({
@@ -99,4 +135,3 @@ function repeat_ask_server_for_level(){
 repeat_ask_server_for_level();
 
 window.getLocation = getLocation;
-  
