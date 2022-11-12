@@ -293,8 +293,40 @@ window.getLocation = getLocation;
             if (obj['result'] == true){                
                 pois = obj['pois'];
             }
-            initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes, pois);
-            
+            ranking = []
+            fetch('http://10.199.226.107:8000/ranking')
+            .then((response) => response.text())
+            .then((response) => {
+                const obj = JSON.parse(response);
+                if (obj['result'] == true){                
+                    ranking = obj['ranking'];
+                }
+                let table = document.getElementById('ranking');
+                let tr1 = document.createElement('tr');
+                let th1 = document.createElement('th');
+                th1.innerHTML = 'Username';
+                let th2 = document.createElement('th');
+                th2.innerHTML = 'Score';
+
+                tr1.appendChild(th1);
+                tr1.appendChild(th2);
+                table.appendChild(tr1);
+                
+                
+
+                for(var i=0;i<ranking.length; i++){
+                    let tr = document.createElement('tr');
+                    let td1 = document.createElement('td');
+                    td1.innerHTML = ranking[i]['username'];
+                    let td2 = document.createElement('td');
+                    td2.innerHTML = ranking[i]['score'];
+                    tr.appendChild(td1); 
+                    tr.appendChild(td2);
+                    table.appendChild(tr);
+                }
+                initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes, pois);
+                
+            });
         });
         
     });
