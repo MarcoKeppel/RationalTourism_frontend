@@ -55,14 +55,16 @@
     destination_lng = 0;
 
     // Uncomment after connection works!
-    fetch('http://10.199.226.107:8000/getTargetLocation')
+    fetch('http://10.199.226.107:8000/phaseTwoInfo')
     .then((response) => response.text())
     .then((response) => {
         const obj = JSON.parse(response);
         if (obj['result'] == true){
             destination_lat  = obj['target']['lat'];
             destination_lng  = obj['target']['lng'];
+            question = obj['question'];
         }
+        document.getElementById('question').innerText = question;
         modes = ["DRIVING", "TRANSIT"]
         initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng, modes);
         

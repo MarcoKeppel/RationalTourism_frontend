@@ -34,7 +34,7 @@
         });
     }
     
-    colors = ["blue", "red"]
+    colors = ["black"]
     for (var i = 0; i < modes.length; i++){
         requestDirections(origin_lat + ',' + origin_lng, destination_lat + ',' + destination_lng, colors[i], modes[i]);
     }
@@ -68,6 +68,7 @@
             question = obj['question'];
             
         }
+        console.log(question);
         document.getElementById('question').innerText = question;
         initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes);
     });
