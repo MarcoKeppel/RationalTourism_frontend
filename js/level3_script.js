@@ -59,23 +59,18 @@
     answers = []
     modes = []
 
-    fetch('http://10.199.226.107:8000/getTargetLocation')
+    fetch('http://10.199.226.107:8000/phaseThreeInfo')
     .then((response) => response.text())
     .then((response) => {
         const obj = JSON.parse(response);
         if (obj['result'] == true){
             destination_lat  = obj['target']['lat'];
             destination_lng  = obj['target']['lng'];
-            destination_modes  = obj['target']['mode'];
+            destination_modes  = obj['modes'];
             question = obj['question'];
-            answers = obj['answers'];
+            
         }
-        answ = document.getElementById('answers');
-        for(var i = 0; i < answers.length; i++){
-            ul = document.createElement('ul');
-            ul.innerText = answers[i]['points']  + ' ' + answers[i]['text'];
-            answ.appendChild(ul);
-        }
+        document.getElementById('question').innerText = question;
         initMap(center_lat, center_lng, start_lat, start_lng, destination_lat, destination_lng,destination_modes);
     });
 }
