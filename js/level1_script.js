@@ -42,7 +42,7 @@ function getLocation(){
     
 }
 
-var current_level = 2;
+var current_level = 1;
 function ask_server_for_level(){
     level = 0;
     fetch('http://10.199.226.107:8000/getLevel')
@@ -51,6 +51,7 @@ function ask_server_for_level(){
         const obj = JSON.parse(data);
         if (obj['result'] == true){
             level  = obj['level'];
+            alert(level)
             if (level != current_level){
                 window.location = 'index_level2.html'
             }
